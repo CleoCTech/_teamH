@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Events\ReportCreatedEvent;
 use App\Models\Department;
 use App\Models\Designation;
 use App\Models\Report;
@@ -72,7 +73,7 @@ class CreateReport extends Component
             $this->getDept->toable()->create([
                 'report_id' => $report->id,
             ]);
-
+            event( new ReportCreatedEvent($report));
 
         }else{
             //to user specific
@@ -81,9 +82,9 @@ class CreateReport extends Component
             $reportTo->toable()->create([
                 'report_id' => $report->id,
             ]);
-
+            event( new ReportCreatedEvent($report));
         }
 
-        return redirect()->route('dashboard');
+        // return redirect()->route('dashboard');
     }
 }

@@ -45,6 +45,34 @@
                             <textarea wire:model.defer='report' id="exampleFormControlTextarea1" class="form-control"
                                 placeholder="Write your report Here" rows="4"></textarea>
                         </div>
+                        <h4 class="text-blue-400 " style="margin-top: 1rem;">Add Files (Optional)
+                            <span
+                                class="svg-icon svg-icon-4 ">
+                                <i class="bi bi-paperclip text-blue-400"></i>
+                            </span>
+                        </h4>
+                        <div  class="row">
+
+                            <div wire:ignore class="col-lg-6 col-md-12 col-sm-12">
+                                <input type="file" name="paperFile"  id="test" multiple>
+                                <script type="text/javascript">
+                                    const inputElement = document.querySelector('input[id="test"]');
+                                    const pond = FilePond.create( inputElement );
+                                    FilePond.setOptions({
+                                        server:{
+                                            url: '/upload',
+                                            headers: {
+                                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                            }
+                                        }
+                                    });
+                                </script>
+                                {{-- <div class="custom-file">
+                                    <input type="file" name="paperFile" class="custom-file-input" id="uploadfiles" />
+                                </div> --}}
+                            </div>
+
+                        </div>
                         <div class="form-group">
                             <button wire:click='store' type="button" class="btn btn-primary">
                                 Send
@@ -56,3 +84,17 @@
         </div>
     </div>
 </div>
+{{-- @section('scripts')
+<script type="text/javascript">
+    const inputElement = document.querySelector('input[id="test"]');
+    const pond = FilePond.create( inputElement );
+    FilePond.setOptions({
+        server:{
+            url: '/upload',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            }
+        }
+    });
+</script>
+@endsection --}}

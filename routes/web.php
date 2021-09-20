@@ -32,4 +32,5 @@ Route::group(['middleware'=>['AuthCheck']], function(){
     Route::get('/register', Register::class)->name('register');
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
     Route::get('/logout', UserLogout::class)->name('logout');
+    Route::post('upload', [\App\Http\Controllers\UploadController::class, 'store']);
 });

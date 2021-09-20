@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\DeptMember;
+use App\Models\File;
 use App\Models\Report;
 use App\Models\ReportGroup;
 use App\Models\User;
@@ -27,6 +28,7 @@ class Dashboard extends Component
 
     public function mount()
     {
+        session()->forget('files');
         $this->user = User::with('dept_membership', 'designation')
                             ->where('id', session()->get('UserLogged'))->first();
                             // dd($this->user->designation->designation_id);
@@ -37,6 +39,7 @@ class Dashboard extends Component
         $this->designation = UserDesignation::with('user', 'designation')
                                         ->where('user_id', $this->user->id)
                                         ->first();
+
 
         if ($this->designation->designation->name == 'Supervisor') {
             // $this->myRpts = ReportGroup::where('toable_id', session()->get('UserLogged'))
@@ -65,6 +68,34 @@ class Dashboard extends Component
         // $this->depRpts =
         // dd($this->myRpts);
 
+    }
+    public function loadFiles($id)
+    {
+        $files = File::where('report_id', $id)
+                            ->get();
+
+                            // dd($files);
+        return $files;
+    }
+    public function getDownload($value)
+    {
+
+            $file= 'storage/employees/' .$value;
+            if (file_exists($file)) {
+                return response()->download($file);
+            } else {
+                $this->alert('error', 'File Does Not Exist', [
+                    'position' =>  'top-end',
+                    'timer' =>  3000,
+                    'toast' =>  true,
+                    'text' =>  '',
+                    'confirmButtonText' =>  'Ok',
+                    'cancelButtonText' =>  'Cancel',
+                    'showCancelButton' =>  false,
+                    'showConfirmButton' =>  false,
+              ]);
+
+            }
     }
     public function updateVar($value)
     {

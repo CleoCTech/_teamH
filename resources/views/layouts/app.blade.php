@@ -22,6 +22,7 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/theme.min.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendor.min.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}" />
+        <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
         @livewireStyles
     </head>
 
@@ -32,12 +33,14 @@
             {{ $slot }}
         </main>
         @livewireScripts
+
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10">
         </script>
         <x-livewire-alert::scripts />
+        <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
         <script src="{{ asset('assets/js/theme.min.js') }}" defer></script>
         <script src="{{ asset('assets/js/vendor.min.js') }}" defer></script>
-
+        {{-- @yield('scripts') --}}
     </body>
 
 </html>

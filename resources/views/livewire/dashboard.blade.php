@@ -50,6 +50,14 @@
                                             <label class="input-label" for="exampleFormControlTextarea1">Comment</label>
                                             <textarea wire:model.defer='comment' id="exampleFormControlTextarea1" class="form-control" placeholder="Write a comment" rows="4"></textarea>
                                         </div>
+                                        <div>
+                                            <ul>
+                                                @foreach ($this->loadFiles($depRpt->report->id) as $item)
+                                                   <li> <a wire:click="getDownload('{{$item->folder}}/{{$item->filename}}')" class="underline-link" href="#">{{ $item->filename }}</a></li>
+                                                @endforeach
+
+                                            </ul>
+                                        </div>
                                         <button wire:click='comment({{ $depRpt->report->id  }})' type="button" class="btn btn-primary">
                                             Comment
                                         </button>
@@ -105,6 +113,14 @@
                                             {{$sentToMe->report->report}}
                                         </div>
                                         <div class="my-3">1. Comment: {{ $sentToMe->report->comment }}</div>
+                                        <div>
+                                            <ul>
+                                                @foreach ($this->loadFiles($sentToMe->report->id) as $item)
+                                                   <li> <a wire:click="getDownload('{{$item->folder}}/{{$item->filename}}')" class="underline-link" href="#">{{ $item->filename }}</a></li>
+                                                @endforeach
+
+                                            </ul>
+                                        </div>
                                     </div>
 
                                 </div>
@@ -154,6 +170,14 @@
                                             {{$myRpt->report}}
                                         </div>
                                         <div class="my-3">1. Comment : {{ $myRpt->comment }}</div>
+                                        <div>
+                                            <ul>
+                                                @foreach ($this->loadFiles($myRpt->id) as $item)
+                                                   <li> <a wire:click="getDownload('{{$item->folder}}/{{$item->filename}}')" class="underline-link" href="#">{{ $item->filename }}</a></li>
+                                                @endforeach
+
+                                            </ul>
+                                        </div>
                                         @if ($designation->designation->name == 'Supervisor')
 
                                         <div class="form-group">
