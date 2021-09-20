@@ -31,7 +31,7 @@ class Login extends Component
 
                 if ($user) {
                     if (Hash::check($this->password, $user->password)) {
-                        // dd('true');
+                        // dd($user->id);
                         session()->put('UserLogged', $user->id);
                         return redirect()->route('dashboard');
                     }
