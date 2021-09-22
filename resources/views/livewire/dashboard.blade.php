@@ -40,10 +40,13 @@
 
                                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
                                     data-parent="#accordionExample">
-
+                                    <a href="{{ route('generate-report',[$depRpt->report->id]) }}" class="btn btn-outline-info">Export to PDF</a>
                                     <div class="card-body">
                                         <div class="text-muted mb-3">
                                             {{$depRpt->report->report}} <span class="timestamp-right">{{ $depRpt->report->created_at }}</span>
+                                        </div>
+                                        <div class="text-muted mb-3">
+                                            Owner: <span class="timestamp-right">{{ $depRpt->report->user->name }}</span>
                                         </div>
                                         <div class="my-3">1. Comment : {{ $depRpt->report->comment }} @if ($depRpt->report->comment != null)
                                             <span class="timestamp-right" >{{ $depRpt->report->updated_at }}</span>
@@ -121,7 +124,7 @@
 
                                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
                                     data-parent="#accordionExample">
-
+                                    <a href="{{ route('generate-report',[$sentToMe->report->id]) }}" class="btn btn-outline-info">Export to PDF</a>
                                     <div class="card-body">
                                         <div class="text-muted mb-3">
                                             {{$sentToMe->report->report}} <span class="timestamp-right" >{{ $sentToMe->report->created_at }}</span>
@@ -170,7 +173,6 @@
                                     data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
                                     aria-controls="collapseTwo">
                                     Report {{ $a }}
-
                                     <span class="card-btn-toggle">
                                         <span class="card-btn-toggle-default">
                                             <i class="tio-add"></i>
@@ -183,6 +185,7 @@
 
                                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
                                     data-parent="#accordionExample">
+                                    <a href="{{ route('generate-report',[$myRpt->id]) }}" class="btn btn-outline-info">Export to PDF</a>
                                     <div class="card-body">
                                         <div class="text-muted mb-3">
                                             {{$myRpt->report}} <span class="timestamp-right" >{{ $myRpt->created_at }}</span>
@@ -273,9 +276,13 @@
 
                                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
                                         data-parent="#accordionExample">
+                                        <a href="{{ route('generate-report',[$myRpt->report->id]) }}" class="btn btn-outline-info">Export to PDF</a>
                                         <div class="card-body">
                                             <div class="text-muted mb-3">
                                                 {{$myRpt->report->report}} <span class="timestamp-right" >{{ $myRpt->report->created_at }}</span>
+                                            </div>
+                                            <div class="text-muted mb-3">
+                                                Owner: <span class="timestamp-right">{{ $myRpt->report->user->name }}</span>
                                             </div>
                                             <div class="my-3">1. Comment : {{ $myRpt->report->comment }} @if ($myRpt->report->comment != null)
                                                 <span class="timestamp-right" >{{ $myRpt->report->updated_at }}</span>
@@ -307,7 +314,7 @@
                                             </div>
 
                                             <div class="form-group pt-lg-5 outline-info" x-data="{}">
-                                                <a wire:click="unmerge('{{ $myRpt->id }}')" href="#" class="btn btn-outline-info">Unmerged</a>
+                                                <a wire:click="unmerge('{{ $myRpt->id }}')" href="#" class="btn btn-outline-info">Unmerge</a>
                                             </div>
                                             @endif
                                         </div>

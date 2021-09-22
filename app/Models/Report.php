@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Report extends Model
 {
@@ -20,4 +21,14 @@ class Report extends Model
     {
         return $this->hasMany(MergeReport::class, 'report_id', 'id');
     }
+
+   /**
+    * Get the user that owns the Report
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+    */
+   public function user(): BelongsTo
+   {
+       return $this->belongsTo(User::class, 'sender_id', 'id');
+   }
 }

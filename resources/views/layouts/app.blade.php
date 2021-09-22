@@ -34,7 +34,7 @@
     <body>
 
         <main style="min-height: 100vh" class="align-items-center">
-            {{--  @yield('content')  --}}
+             @yield('content')
             {{ $slot }}
         </main>
         @livewireScripts

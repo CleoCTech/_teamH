@@ -13,6 +13,7 @@ use App\Models\UserDesignation;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
+use PDF;
 
 class Dashboard extends Component
 {
@@ -75,6 +76,19 @@ class Dashboard extends Component
         // $this->depRpts =
         // dd($this->myRpts);
 
+    }
+
+    // Generate PDF
+    public function createPDF($id) {
+        // retreive all records from db
+        $data = Report::where('id', $id)->first();
+
+        // share data to view
+        // view()->share('livewire.dashboard',$data);
+        $pdf = PDF::loadView('show-report', $data);
+
+        // download PDF file with download method
+        return $pdf->download('pdf_file.pdf');
     }
     public function loadFiles($id)
     {

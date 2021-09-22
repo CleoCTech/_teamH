@@ -24,6 +24,8 @@ use Illuminate\Support\Facades\Route;
 // Auth::routes();
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/show-report', [App\Http\Controllers\ShowReportController::class, 'showReport'])->name('get-report');
+Route::get('/generate-report/{id}', [App\Http\Controllers\ShowReportController::class, 'generateRpt'])->name('generate-report');
 
 
 
