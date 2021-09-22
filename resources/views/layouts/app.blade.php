@@ -23,6 +23,8 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendor.min.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}" />
         <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+
         @livewireStyles
     </head>
 

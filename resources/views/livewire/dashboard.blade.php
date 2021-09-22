@@ -43,9 +43,11 @@
 
                                     <div class="card-body">
                                         <div class="text-muted mb-3">
-                                            {{$depRpt->report->report}}
+                                            {{$depRpt->report->report}} <span class="timestamp-right">{{ $depRpt->report->created_at }}</span>
                                         </div>
-                                        <div class="my-3">1. Comment : {{ $depRpt->report->comment }}</div>
+                                        <div class="my-3">1. Comment : {{ $depRpt->report->comment }} @if ($depRpt->report->comment != null)
+                                            <span class="timestamp-right" >{{ $depRpt->report->updated_at }}</span>
+                                        @endif </div>
                                         <div class="form-group">
                                             <label class="input-label" for="exampleFormControlTextarea1">Comment</label>
                                             <textarea wire:model.defer='comment' id="exampleFormControlTextarea1" class="form-control" placeholder="Write a comment" rows="4"></textarea>
@@ -53,7 +55,9 @@
                                         <div>
                                             <ul>
                                                 @foreach ($this->loadFiles($depRpt->report->id) as $item)
-                                                   <li> <a wire:click="getDownload('{{$item->folder}}/{{$item->filename}}')" class="underline-link" href="#">{{ $item->filename }}</a></li>
+                                                   <li> <a wire:click="getDownload('{{$item->folder}}/{{$item->filename}}')" class="underline-link" href="#">{{ $item->filename }}</a>
+                                                    <span wire:click="dropFile('{{ $item->id }}', '{{ $item->folder}}', '{{$item->filename }}')"><i class="fas fa-trash-alt icon-hover"></i></span>
+                                                    </li>
                                                 @endforeach
 
                                             </ul>
@@ -110,13 +114,17 @@
 
                                     <div class="card-body">
                                         <div class="text-muted mb-3">
-                                            {{$sentToMe->report->report}}
+                                            {{$sentToMe->report->report}} <span class="timestamp-right" >{{ $sentToMe->report->created_at }}</span>
                                         </div>
-                                        <div class="my-3">1. Comment: {{ $sentToMe->report->comment }}</div>
+                                        <div class="my-3">1. Comment : {{ $sentToMe->report->comment }} @if ($sentToMe->report->comment != null)
+                                            <span class="timestamp-right" >{{ $sentToMe->report->updated_at }}</span>
+                                        @endif </div>
                                         <div>
                                             <ul>
                                                 @foreach ($this->loadFiles($sentToMe->report->id) as $item)
-                                                   <li> <a wire:click="getDownload('{{$item->folder}}/{{$item->filename}}')" class="underline-link" href="#">{{ $item->filename }}</a></li>
+                                                   <li> <a wire:click="getDownload('{{$item->folder}}/{{$item->filename}}')" class="underline-link" href="#">{{ $item->filename }}</a>
+                                                    <span wire:click="dropFile('{{ $item->id }}', '{{ $item->folder}}', '{{$item->filename }}')"><i class="fas fa-trash-alt icon-hover"></i></span>
+                                                  </li>
                                                 @endforeach
 
                                             </ul>
@@ -167,13 +175,17 @@
                                     data-parent="#accordionExample">
                                     <div class="card-body">
                                         <div class="text-muted mb-3">
-                                            {{$myRpt->report}}
+                                            {{$myRpt->report}} <span class="timestamp-right" >{{ $myRpt->created_at }}</span>
                                         </div>
-                                        <div class="my-3">1. Comment : {{ $myRpt->comment }}</div>
+                                        <div class="my-3">1. Comment : {{ $myRpt->comment }} @if ($myRpt->comment != null)
+                                            <span class="timestamp-right" >{{ $myRpt->updated_at }}</span>
+                                        @endif </div>
                                         <div>
                                             <ul>
                                                 @foreach ($this->loadFiles($myRpt->id) as $item)
-                                                   <li> <a wire:click="getDownload('{{$item->folder}}/{{$item->filename}}')" class="underline-link" href="#">{{ $item->filename }}</a></li>
+                                                   <li> <a wire:click="getDownload('{{$item->folder}}/{{$item->filename}}')" class="underline-link" href="#">{{ $item->filename }}</a>
+                                                    <span wire:click="dropFile('{{ $item->id }}', '{{ $item->folder}}', '{{$item->filename }}')"><i class="fas fa-trash-alt icon-hover"></i></span>
+                                                   </li>
                                                 @endforeach
 
                                             </ul>
@@ -215,4 +227,12 @@
         @endif
     </div>
 
+    <style>
+        .icon-hover:hover{
+            color:red;
+        }
+        .timestamp-right{
+            float: right;
+        }
+    </style>
 </div>

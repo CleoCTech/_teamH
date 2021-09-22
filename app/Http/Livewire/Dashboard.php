@@ -9,6 +9,7 @@ use App\Models\ReportGroup;
 use App\Models\User;
 use App\Models\UserDesignation;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
 class Dashboard extends Component
@@ -96,6 +97,43 @@ class Dashboard extends Component
               ]);
 
             }
+    }
+    public function test()
+    {
+        dd('test');
+    }
+    public function dropFile($id, $folder, $filename)
+    {
+        
+        Storage::delete('employees/'.$folder . '/' .$filename);
+        // rmdir('storage/employees/' .$folder );
+        DB::beginTransaction();
+        try {
+            File::where('id', $id)->delete();
+            DB::Commit();
+            $this->alert('success', 'File Deleted Successfully.', [
+                'position' =>  'top-end',
+                'timer' =>  3000,
+                'toast' =>  true,
+                'text' =>  '',
+                'confirmButtonText' =>  'Ok',
+                'cancelButtonText' =>  'Cancel',
+                'showCancelButton' =>  false,
+                'showConfirmButton' =>  false,
+          ]);
+        } catch (\Exception $e) {
+            DB::rollback();
+            $this->alert('error', $e->getMessage(), [
+                'position' =>  'top-end',
+                'timer' =>  3000,
+                'toast' =>  true,
+                'text' =>  '',
+                'confirmButtonText' =>  'Ok',
+                'cancelButtonText' =>  'Cancel',
+                'showCancelButton' =>  false,
+                'showConfirmButton' =>  false,
+          ]);
+        }
     }
     public function updateVar($value)
     {
