@@ -4,6 +4,8 @@ namespace App\Http\Livewire;
 
 use App\Models\DeptMember;
 use App\Models\File;
+use App\Models\MergeCategory;
+use App\Models\MergeReport;
 use App\Models\Report;
 use App\Models\ReportGroup;
 use App\Models\User;
@@ -24,6 +26,7 @@ class Dashboard extends Component
     public $toDelete;
     public $toComment;
     public $comment;
+    public $mergeCategories = [];
 
     protected $listeners = ['varView' => 'updateVar'];
 
@@ -52,6 +55,9 @@ class Dashboard extends Component
             $this->depRpts = ReportGroup::where('toable_id', $this->getDept->department->id)
             ->where('toable_type', 'App\Models\Department')
             ->get();
+            $this->mergeCategories = MergeCategory::all();
+
+
 
         }elseif($this->designation->designation->name == 'Employee'){
             $this->myRpts = Report::where('sender_id', session()->get('UserLogged'))
@@ -98,13 +104,89 @@ class Dashboard extends Component
 
             }
     }
-    public function test()
+    public function test($value)
     {
-        dd('test');
+        dd($value);
+    }
+    public function merge($value, $reportId)
+    {
+        // dd($value . $reportId);
+
+        $checkExist = MergeReport::where('report_id', $reportId)
+                        ->where('category_id', $value)
+                        ->first();
+
+        if (!$checkExist) {
+           MergeReport::create([
+               'report_id'=>$reportId,
+               'category_id'=>$value
+           ]);
+
+           $this->alert('success', 'Merged Successfully.', [
+            'position' =>  'center',
+            'timer' =>  3000,
+            'toast' =>  true,
+            'text' =>  '',
+            'confirmButtonText' =>  'Ok',
+            'cancelButtonText' =>  'Cancel',
+            'showCancelButton' =>  false,
+            'showConfirmButton' =>  false,
+        ]);
+        return redirect()->route('dashboard');
+        }else{
+            $this->alert('error', 'Already Exists', [
+                'position' =>  'center',
+                'timer' =>  3000,
+                'toast' =>  true,
+                'text' =>  '',
+                'confirmButtonText' =>  'Ok',
+                'cancelButtonText' =>  'Cancel',
+                'showCancelButton' =>  false,
+                'showConfirmButton' =>  false,
+          ]);
+        }
+    }
+    public function merged($id)
+    {
+        $reports = MergeReport::with('report')
+                                ->where('category_id', $id)
+                                ->get();
+        return $reports;
+    }
+    public function unmerge($id)
+    {
+        // dd($id);
+        $unmerge = MergeReport::find($id);
+        $unmerge->delete();
+        // $unmerge = MergeReport::where('report_id', $id)->delete();
+        if ($unmerge) {
+            $this->alert('success', 'Unmerged Successfully', [
+                'position' =>  'center',
+                'timer' =>  3000,
+                'toast' =>  true,
+                'text' =>  '',
+                'confirmButtonText' =>  'Ok',
+                'cancelButtonText' =>  'Cancel',
+                'showCancelButton' =>  false,
+                'showConfirmButton' =>  false,
+          ]);
+          return redirect()->route('dashboard');
+        }else{
+            $this->alert('error', 'Oops! Something went wrong', [
+                'position' =>  'center',
+                'timer' =>  3000,
+                'toast' =>  true,
+                'text' =>  '',
+                'confirmButtonText' =>  'Ok',
+                'cancelButtonText' =>  'Cancel',
+                'showCancelButton' =>  false,
+                'showConfirmButton' =>  false,
+          ]);
+        }
     }
     public function dropFile($id, $folder, $filename)
     {
-        
+
         Storage::delete('employees/'.$folder . '/' .$filename);
         // rmdir('storage/employees/' .$folder );
         DB::beginTransaction();

@@ -6,18 +6,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Report extends Model
+class MergeCategory extends Model
 {
     use HasFactory;
-    protected $fillable = ['report', 'sender_id', 'comment'];
+
+    protected $fillable = ['name'];
 
     /**
-     * Get all of the merges for the Report
+     * Get all of the merges for the MergeCategory
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function merges(): HasMany
     {
-        return $this->hasMany(MergeReport::class, 'report_id', 'id');
+        return $this->hasMany(MergeReport::class, 'category_id', 'id');
     }
 }
