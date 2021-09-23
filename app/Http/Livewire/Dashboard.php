@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Comment;
 use App\Models\DeptMember;
 use App\Models\File;
 use App\Models\MergeCategory;
@@ -121,6 +122,11 @@ class Dashboard extends Component
     public function test($value)
     {
         dd($value);
+    }
+    public function loadComments($id)
+    {
+        $comments = Comment::where('report_id', $id)->get();
+        return $comments;
     }
     public function merge($value, $reportId)
     {
@@ -255,10 +261,10 @@ class Dashboard extends Component
         $this->toComment = $id;
         try {
             DB::transaction(function () {
-                Report::where('id', $this->toComment)
-                        ->update([
-                            'comment' =>$this->comment,
-                        ]);
+                Comment::create([
+                    'comment'=>$this->comment,
+                    'report_id'=>$this->toComment
+                ]);
             });
             $this->alert('success', 'Comment Sent Successfully', [
                 'position' =>  'top-end',
@@ -271,6 +277,7 @@ class Dashboard extends Component
                 'showConfirmButton' =>  false,
           ]);
           $this->reset('comment');
+          return redirect()->route('dashboard');
         } catch (\Throwable $th) {
             $this->alert('error', 'Oops! Something went wrong', [
                 'position' =>  'top-end',

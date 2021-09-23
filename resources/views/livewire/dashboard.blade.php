@@ -48,9 +48,12 @@
                                         <div class="text-muted mb-3">
                                             Owner: <span class="timestamp-right">{{ $depRpt->report->user->name }}</span>
                                         </div>
-                                        <div class="my-3">1. Comment : {{ $depRpt->report->comment }} @if ($depRpt->report->comment != null)
-                                            <span class="timestamp-right" >{{ $depRpt->report->updated_at }}</span>
-                                        @endif </div>
+                                        @foreach ($this->loadComments($depRpt->report->id) as $item)
+                                        <div class="my-3"> Comment : {{ $item->comment }}
+                                            <span class="timestamp-right" >{{ $item->created_at }}</span>
+                                        </div>
+                                        @endforeach
+
                                         <div class="form-group">
                                             <label class="input-label" for="exampleFormControlTextarea1">Comment</label>
                                             <textarea wire:model.defer='comment' id="exampleFormControlTextarea1" class="form-control" placeholder="Write a comment" rows="4"></textarea>
@@ -129,9 +132,11 @@
                                         <div class="text-muted mb-3">
                                             {{$sentToMe->report->report}} <span class="timestamp-right" >{{ $sentToMe->report->created_at }}</span>
                                         </div>
-                                        <div class="my-3">1. Comment : {{ $sentToMe->report->comment }} @if ($sentToMe->report->comment != null)
-                                            <span class="timestamp-right" >{{ $sentToMe->report->updated_at }}</span>
-                                        @endif </div>
+                                        @foreach ($this->loadComments($sentToMe->report->id) as $item)
+                                        <div class="my-3"> Comment : {{ $item->comment }}
+                                            <span class="timestamp-right" >{{ $item->created_at }}</span>
+                                        </div>
+                                        @endforeach
                                         <div>
                                             <ul>
                                                 @foreach ($this->loadFiles($sentToMe->report->id) as $item)
@@ -190,9 +195,11 @@
                                         <div class="text-muted mb-3">
                                             {{$myRpt->report}} <span class="timestamp-right" >{{ $myRpt->created_at }}</span>
                                         </div>
-                                        <div class="my-3">1. Comment : {{ $myRpt->comment }} @if ($myRpt->comment != null)
-                                            <span class="timestamp-right" >{{ $myRpt->updated_at }}</span>
-                                        @endif </div>
+                                        @foreach ($this->loadComments($myRpt->id) as $item)
+                                        <div class="my-3"> Comment : {{ $item->comment }}
+                                            <span class="timestamp-right" >{{ $item->created_at }}</span>
+                                        </div>
+                                        @endforeach
                                         <div>
                                             <ul>
                                                 @foreach ($this->loadFiles($myRpt->id) as $item)
@@ -284,9 +291,11 @@
                                             <div class="text-muted mb-3">
                                                 Owner: <span class="timestamp-right">{{ $myRpt->report->user->name }}</span>
                                             </div>
-                                            <div class="my-3">1. Comment : {{ $myRpt->report->comment }} @if ($myRpt->report->comment != null)
-                                                <span class="timestamp-right" >{{ $myRpt->report->updated_at }}</span>
-                                            @endif </div>
+                                            @foreach ($this->loadComments($myRpt->report->id) as $item)
+                                            <div class="my-3"> Comment : {{ $item->comment }}
+                                                <span class="timestamp-right" >{{ $item->created_at }}</span>
+                                            </div>
+                                            @endforeach
                                             <div>
                                                 <ul>
                                                     @foreach ($this->loadFiles($myRpt->report->id) as $item)

@@ -31,4 +31,14 @@ class Report extends Model
    {
        return $this->belongsTo(User::class, 'sender_id', 'id');
    }
+
+   /**
+    * Get all of the comments for the Report
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\HasMany
+    */
+   public function comments(): HasMany
+   {
+       return $this->hasMany(Comment::class, 'report_id', 'id');
+   }
 }
